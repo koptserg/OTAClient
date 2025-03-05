@@ -1,10 +1,8 @@
-# How to join:
-### If device in FN(factory new) state:
-1. Press and hold button (1) for 2-3 seconds, until device start flashing led
-2. Wait, in case of successfull join, device will flash led 5 times
-3. If join failed, device will flash led 3 times
+### Добавить устройство в сеть:
+1. Нажмите и удерживайте кнопку S2 в течении 3 секунд, устройство не начнет мигать светодиодом D1.
+2. Подождите, в случае успешного подключения светодиод D1 устройства мигнет 5 раз.
+3. Если подключение не удалось, светодиод D1 устройства мигнет 3 раза.
 
-### If device in a network:
-1. Hold button (1) for 10 seconds, this will reset device to FN(factory new) status
-2. Go to step 1 for FN device
+### Удалить устройство из сети:
+1. Удерживайте кнопку S2 в течение 10 секунд, это сбросит устройство в состояние FN (заводское установки).
 
