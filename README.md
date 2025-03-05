@@ -89,7 +89,7 @@
 
 ![](/images/Screenshot_2251.jpg)
 
-1.7.2.1. Добавляем задачу zclOTA
+1.7.2.2. Добавляем задачу zclOTA
 
 ![](/images/Screenshot_2252.jpg)
 
