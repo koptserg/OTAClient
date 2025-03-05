@@ -16,7 +16,8 @@
 ![](/images/photo_2025-03-05_12-22-52.jpg)
 
 1. Плата отладки СС2530 ChdTech.
-2. M25PE20-VMN6TP, Флэш-память 2Мбит 75МГц 8SO 
+2. M25PE20-VMN6TP, Флэш-память 2Мбит 75МГц 8SO
+MISO(2) - P1.7, MOSI(5) - P1.6, SCLK(6) - P1.5, CS(1) - P1.3, RESET(7) - P1.1, VCC(8,3), GND(4)
 
 ### Инструкция по добавлению ОТА client с внешней памятью
 1. Создаем файл прошивки своего проекта EndDeviceEB-OTAClient.hex с настройкой ОТА client и файл образа загрузки по OTA 5678-1234-0000ABCD.zigbee 
@@ -30,7 +31,7 @@
 
 1.2. Переходим Project>Options, категория Linker 
 
-1.2.1. Закладка Config (устанавливаем конфигугфцию ota.xcl)
+1.2.1. Закладка Config (файл управления компоновщиком ota.xcl)
 
 ![](/images/Screenshot_2240.jpg)
 
@@ -50,3 +51,74 @@
 
 ![](/images/Screenshot_2243.jpg)
 
+1.4. Категория C/C++Compiler
+
+1.4.1. Закладка Preprocessor прописываем путь для поиска OTA\Source и preinclude.h
+
+![](/images/Screenshot_2246.jpg) 
+
+1.4.2. Изменяем файл preinclude.h
+
+![](/images/Screenshot_2247.jpg) 
+
+1.5. Файл управления компоновщиком ota.xcl
+
+1.5.1. Добавляем в проект ota.xcl, открываем и убираем комментарии // на двух отмеченных строчках 
+
+![](/images/Screenshot_2245.jpg)
+
+1.6. Добавляем в проект файлы исходников OTA
+
+1.6.1. Файлы HAL_OTA hal_ota.h и hal_ota.с
+
+![](/images/Screenshot_2248.jpg)
+
+1.6.2. Файлы ZCL_OTA zcl_ota.h и zcl_ota.c
+
+![](/images/Screenshot_2249.jpg)
+
+1.7. Изменяем файлы исходников проекта
+
+1.7.1. hal_board_cfg.h добавляем SPI для внешней флеш-памяти
+
+![](/images/Screenshot_2250.jpg)
+
+1.7.2. Osal_App.c
+
+1.7.2.1. Добавляем цикл zclOTA
+
+![](/images/Screenshot_2251.jpg)
+
+1.7.2.1. Добавляем задачу zclOTA
+
+![](/images/Screenshot_2252.jpg)
+
+1.7.3. zcl_app.c
+
+1.7.3.1. Подключаем библиотеки zcl_ota.h и hal_ota.h
+
+![](/images/Screenshot_2253.jpg)
+
+1.7.3.2. Устанавливаем Poll rate
+
+![](/images/Screenshot_2254.jpg)
+
+1.7.3.3. Функция обработки сообщений
+
+![](/images/Screenshot_2255.jpg)
+
+1.7.3.3. Регистрация для событий обратного вызова от ZCL OTA
+
+![](/images/Screenshot_2256.jpg)
+
+1.7.3.3. Сработка индикатора ZCL_OTA_CALLBACK_IND
+
+![](/images/Screenshot_2257.jpg)
+
+1.7.3.3. Обработчик сообщений ZCL OTA
+
+![](/images/Screenshot_2258.jpg)
+
+1.8. Собрать проект Rebuild All
+
+![](/images/Screenshot_2259.jpg)
