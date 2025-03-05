@@ -19,7 +19,7 @@
 2. M25PE20-VMN6TP, Флэш-память 2Мбит 75МГц 8SO
 MISO(2) - P1.7, MOSI(5) - P1.6, SCLK(6) - P1.5, CS(1) - P1.3, RESET(7) - P1.1, VCC(8,3), GND(4)
 
-### Инструкция по добавлению ОТА client с внешней памятью
+### Инструкция по добавлению в ваш проект ОТА client с внешней памятью
 1. Создаем файл прошивки своего проекта EndDeviceEB-OTAClient.hex с настройкой ОТА client и файл образа загрузки по OTA 5678-1234-0000ABCD.zigbee 
 2. Создаем файл прошивки проекта OTA-Boot Boot.hex
 3. Создание объединенного шестнадцатеричного файла, подходящий для TI Flash Programmer.
@@ -122,3 +122,41 @@ MISO(2) - P1.7, MOSI(5) - P1.6, SCLK(6) - P1.5, CS(1) - P1.3, RESET(7) - P1.1, V
 1.8. Собрать проект Rebuild All
 
 ![](/images/Screenshot_2259.jpg)
+
+### 2. Создаем файл прошивки проекта OTA-Boot Boot.hex
+
+2.1. Открываем проект OTA-Boot в IAR
+C:\Texas Instruments\Z-Stack 3.0.2\Projects\zstack\OTA\Boot\CC2530DB\Boot.eww
+
+![](/images/Screenshot_2260.jpg)
+
+2.2. Переходим Project>Options, категория Linker 
+
+2.2.1. Закладка Output (установить Allow C-SPY-specific extra output file)
+
+![](/images/Screenshot_2261.jpg)
+
+2.2.2. Закладка Extra Output (Boot.hex в шеснатеричном формате)
+
+![](/images/Screenshot_2262.jpg)
+
+2.3. Собрать проект Rebuild All (нам нужен Boot.hex)
+
+![](/images/Screenshot_2263.jpg)
+
+### 3. Создание объединенного шестнадцатеричного файла, подходящий для TI Flash Programmer.
+
+3.1. Используйте любой текстовый редактор, чтобы открыть hex-файл приложения, созданный выше: C:\Texas Instruments\Z-Stack 3.0.2\Projects\zstack\HomeAutomation\OTAClient\CC2530DB\OTACLIENT_CHDTECH\Exe\EndDeviceEB-OTAClient.hex
+
+3.2. Удалите эту первую строку из файла:
+:020000040000FA
+
+3.3. В отдельном окне текстового редактора откройте hex-файл приложения OTA Boot, созданный выше: C:\Texas Instruments\Z-Stack 3.0.2\Projects\zstack\OTA\Boot\CC2530DB\OTA-Boot\Exe\Boot.hex
+
+3.4. Удалите последние две строки из файла Boot.hex. Они должны выглядеть следующим образом:
+:0400000500000738B8
+:00000001FF
+
+3.5. Скопируйте отредактированное содержимое hex-файла приложения OTA Boot Boot.hex в начало файла кода приложения EndDeviceEB-OTAClient.hex и сохраните его.
+
+3.6. Используйте программатор SmartRF для установки отредактированного шестнадцатеричного образа в SoC CC2530.
