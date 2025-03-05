@@ -161,4 +161,6 @@ C:\Texas Instruments\Z-Stack 3.0.2\Projects\zstack\OTA\Boot\CC2530DB\Boot.eww
 
 3.5. Скопируйте отредактированное содержимое hex-файла приложения OTA Boot Boot.hex в начало файла кода приложения EndDeviceEB-OTAClient.hex и сохраните его.
 
+![](/images/Screenshot_2264.jpg)
+
 3.6. Используйте программатор SmartRF для установки отредактированного шестнадцатеричного образа в SoC CC2530.
