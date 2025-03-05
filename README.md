@@ -43,7 +43,7 @@
 
 ![](/images/Screenshot_2242.jpg)
 
-1.3. Категория Linker
+1.3. Категория Build Action
 
 1.3.1. Post-Build command line (записываем команду формирования образа OTA 5678-1234-0000ABCD.zigbee)
 
@@ -146,16 +146,18 @@ C:\Texas Instruments\Z-Stack 3.0.2\Projects\zstack\OTA\Boot\CC2530DB\Boot.eww
 
 ### 3. Создание объединенного шестнадцатеричного файла, подходящий для TI Flash Programmer.
 
-3.1. Используйте любой текстовый редактор, чтобы открыть hex-файл приложения, созданный выше: C:\Texas Instruments\Z-Stack 3.0.2\Projects\zstack\HomeAutomation\OTAClient\CC2530DB\OTACLIENT_CHDTECH\Exe\EndDeviceEB-OTAClient.hex
+3.1. Используйте любой текстовый редактор, чтобы открыть hex-файл приложения, созданный выше: 
+- C:\Texas Instruments\Z-Stack 3.0.2\Projects\zstack\HomeAutomation\OTAClient\CC2530DB\OTACLIENT_CHDTECH\Exe\EndDeviceEB-OTAClient.hex
 
 3.2. Удалите эту первую строку из файла:
-:020000040000FA
+- :020000040000FA
 
-3.3. В отдельном окне текстового редактора откройте hex-файл приложения OTA Boot, созданный выше: C:\Texas Instruments\Z-Stack 3.0.2\Projects\zstack\OTA\Boot\CC2530DB\OTA-Boot\Exe\Boot.hex
+3.3. В отдельном окне текстового редактора откройте hex-файл приложения OTA Boot, созданный выше: 
+- C:\Texas Instruments\Z-Stack 3.0.2\Projects\zstack\OTA\Boot\CC2530DB\OTA-Boot\Exe\Boot.hex
 
 3.4. Удалите последние две строки из файла Boot.hex. Они должны выглядеть следующим образом:
-:0400000500000738B8
-:00000001FF
+- :0400000500000738B8
+- :00000001FF
 
 3.5. Скопируйте отредактированное содержимое hex-файла приложения OTA Boot Boot.hex в начало файла кода приложения EndDeviceEB-OTAClient.hex и сохраните его.
 
