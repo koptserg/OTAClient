@@ -126,7 +126,8 @@
 ### 2. Создаем файл прошивки проекта OTA-Boot Boot.hex
 
 2.1. Открываем проект OTA-Boot в IAR
-C:\Texas Instruments\Z-Stack 3.0.2\Projects\zstack\OTA\Boot\CC2530DB\Boot.eww
+
+- C:\Texas Instruments\Z-Stack 3.0.2\Projects\zstack\OTA\Boot\CC2530DB\Boot.eww
 
 ![](/images/Screenshot_2260.jpg)
 
