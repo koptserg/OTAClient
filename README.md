@@ -41,3 +41,12 @@
 1.2.3. Закладка Extra Output (файл EndDeviceEB-OTAClient.sim нужен для формирования образа OTA 5678-1234-0000ABCD.zigbee)
 
 ![](/images/Screenshot_2242.jpg)
+
+1.3. Категория Linker
+
+1.3.1. Post-Build command line (записываем команду формирования образа OTA 5678-1234-0000ABCD.zigbee)
+
+"$PROJ_DIR$\..\..\..\..\tools\OTA\OtaConverter\Release\OtaConverter.exe" "$PROJ_DIR$\OTACLIENT_CHDTECH\Exe\EndDeviceEB-OTAClient.sim" -o"$PROJ_DIR$\OTACLIENT_CHDTECH\Exe" -t0x1234 -m0x5678 -v0000ABCD -pCC2530DB
+
+![](/images/Screenshot_2243.jpg)
+
