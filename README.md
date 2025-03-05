@@ -25,3 +25,19 @@
 
 ### 1. Создаем файл прошивки своего проекта EndDeviceEB-OTAClient.hex с настройкой ОТА client и файл образа загрузки по OTA 5678-1234-0000ABCD.zigbee 
 1.1. Открываем свой проект в IAR. 
+
+![](/images/Screenshot_2239.jpg)
+
+1.2. Переходим Project>Options, категория Linker 
+
+1.2.1. Закладка Config (устанавливаем конфигугфцию ota.xcl)
+
+![](/images/Screenshot_2240.jpg)
+
+1.2.2. Закладка Output (задаем имя выходного файл EndDeviceEB-OTAClient.hex в формате hex)
+
+![](/images/Screenshot_2241.jpg)
+
+1.2.3. Закладка Extra Output (файл EndDeviceEB-OTAClient.sim нужен для формирования образа OTA 5678-1234-0000ABCD.zigbee)
+
+![](/images/Screenshot_2242.jpg)
