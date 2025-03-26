@@ -17,10 +17,12 @@
 #define ZCL_ON_OFF
 #define ZCL_LEVEL_CTRL
 #define ZCL_REPORTING_DEVICE
+#define ZCL_GROUPS
 
 #define OTA_CLIENT TRUE
 #define OTA_HA
-#define ZCL_GROUPS
+#define OTA_MANUFACTURER_ID                           0x5678
+#define OTA_TYPE_ID                                   0x1234
 
 #define ZSTACK_DEVICE_BUILD (DEVICE_BUILD_ENDDEVICE)
 //#define ZSTACK_DEVICE_BUILD (DEVICE_BUILD_ROUTER)
@@ -30,7 +32,7 @@
 //#define BDB_REPORTING TRUE
 
 
-#define ISR_KEYINTERRUPT
+//#define ISR_KEYINTERRUPT
 #define HAL_BUZZER FALSE
 
 #define HAL_LED TRUE
@@ -56,7 +58,7 @@
 
 #if defined(DO_DEBUG_UART)
 #define HAL_UART TRUE
-#define INT_HEAP_LEN (2685 - 0x4B - 0xBB)
+//#define INT_HEAP_LEN (2685 - 0x4B - 0xBB)
 #endif
 #ifdef DO_DEBUG_UART
 #define HAL_UART_DMA 1  // uart0

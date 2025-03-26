@@ -144,6 +144,10 @@ void zclApp_Init(byte task_id) {
     LREP("Started build %s \r\n", zclApp_DateCodeNT);
    
     zclApp_StartReloadTimer();
+    
+#if HAL_OTA_XNV_IS_SPI
+//  XNV_SPI_INIT();
+#endif
 }
 
 uint16 zclApp_event_loop(uint8 task_id, uint16 events) {
@@ -229,6 +233,27 @@ static void zclApp_HandleKeys(byte portAndAction, byte keyCode) {
         LREPMaster("Key press PORT0\r\n");
         if (contact) {
           zclGeneral_SendOnOff_CmdToggle( 1, &inderect_DstAddr, FALSE, 0 );
+          HalLedSet(HAL_LED_2, HAL_LED_MODE_TOGGLE);
+//          HalOTAChkDL ( HAL_OTA_CRC_OSET );
+/*          
+          uint8 raw[32] = {0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 0xFF, 0x00, 
+                           0x08, 0x09, 0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F,
+                           0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
+                           0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
+          };   
+
+          uint8 raw[256];
+          for (uint16 i=0; i < 256; i++){
+            raw[i] = 0xAB;
+          }
+            
+          HalOTAWrite(0x00000000, raw, 256, HAL_OTA_DL);
+          
+          DelayMs(100);
+          
+          OTA_ImageHeader_t header;
+          HalOTARead(0x00000000, (uint8 *)&header, 256, HAL_OTA_DL);
+*/          
         }
 #ifdef POWER_SAVING         
         osal_pwrmgr_task_state(zclApp_TaskID, PWRMGR_HOLD);
@@ -240,6 +265,8 @@ static void zclApp_HandleKeys(byte portAndAction, byte keyCode) {
      } else if (portAndAction & HAL_KEY_PORT2) {
        LREPMaster("Key press PORT2\r\n");
        if (contact) {
+//          HalSPIEraseChip();
+          
           HalLedSet(HAL_LED_1, HAL_LED_MODE_BLINK);
           osal_start_timerEx(zclApp_TaskID, APP_REPORT_EVT, 200);
        }
@@ -350,7 +377,8 @@ static void zclApp_ProcessOTAMsgs( zclOTA_CallbackMsg_t* pMsg )
       // Speed up the poll rate
       RxOnIdle = TRUE;
       ZMacSetReq( ZMacRxOnIdle, &RxOnIdle );
-      NLME_SetPollRate( 2000 );
+//      NLME_SetPollRate( 2000 );
+      NLME_SetPollRate( 300 );
     }
     break;
 

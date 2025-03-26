@@ -45,6 +45,7 @@ uint16 *tasksEvents;
 
 void osalInitTasks(void) {
     DebugInit();
+
     uint8 taskID = 0;
 
     tasksEvents = (uint16 *)osal_mem_alloc(sizeof(uint16) * tasksCnt);

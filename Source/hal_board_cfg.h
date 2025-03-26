@@ -16,7 +16,6 @@
 
 
 
-
 /* ------------------------------------------------------------------------------------------------
  *                                          Clock Speed
  * ------------------------------------------------------------------------------------------------
@@ -150,7 +149,8 @@ extern void MAC_RfFrontendSetup(void);
   PREFETCH_ENABLE();                                            \
   HAL_TURN_OFF_LED1();                                           \
   LED1_DDR |= LED1_BV;                                           \
-  LED4_DDR |= LED4_BV;                                           \
+  HAL_TURN_OFF_LED2();                                           \
+  LED2_DDR |= LED2_BV;                                           \
 }
 
 /* ----------- Debounce ---------- */
@@ -177,33 +177,33 @@ extern void MAC_RfFrontendSetup(void);
   #define LED1_SBIT         P1_0
   #define LED1_DDR          P1DIR
   #define LED1_POLARITY     ACTIVE_LOW
+
+  #define LED2_BV           BV(4)
+  #define LED2_SBIT         P1_4
+  #define LED2_DDR          P1DIR
+  #define LED2_POLARITY     ACTIVE_LOW
+
 #endif
 
-//power pin
-#define LED4_BV           BV(1)
-#define LED4_SBIT         P1_1
-#define LED4_DDR          P1DIR
-#define LED4_POLARITY     ACTIVE_HIGH
-
 #define HAL_TURN_OFF_LED1()       st( LED1_SBIT = LED1_POLARITY (0); )
-#define HAL_TURN_OFF_LED2()       asm("NOP")
+#define HAL_TURN_OFF_LED2()       st( LED2_SBIT = LED2_POLARITY (0); )
 #define HAL_TURN_OFF_LED3()       asm("NOP")
-#define HAL_TURN_OFF_LED4()       st( LED4_SBIT = LED4_POLARITY (0); )
+#define HAL_TURN_OFF_LED4()       asm("NOP")
 
 #define HAL_TURN_ON_LED1()        st( LED1_SBIT = LED1_POLARITY (1); )
-#define HAL_TURN_ON_LED2()        asm("NOP")
+#define HAL_TURN_ON_LED2()        st( LED2_SBIT = LED2_POLARITY (1); )
 #define HAL_TURN_ON_LED3()        asm("NOP")
-#define HAL_TURN_ON_LED4()        st( LED4_SBIT = LED4_POLARITY (1); )
+#define HAL_TURN_ON_LED4()        asm("NOP")
 
 #define HAL_TOGGLE_LED1()         st( if (LED1_SBIT) { LED1_SBIT = 0; } else { LED1_SBIT = 1;} )
-#define HAL_TOGGLE_LED2()         asm("NOP")
+#define HAL_TOGGLE_LED2()         st( if (LED2_SBIT) { LED2_SBIT = 0; } else { LED2_SBIT = 1;} )
 #define HAL_TOGGLE_LED3()         asm("NOP")
-#define HAL_TOGGLE_LED4()         st( if (LED4_SBIT) { LED4_SBIT = 0; } else { LED4_SBIT = 1;} )
+#define HAL_TOGGLE_LED4()         asm("NOP")
 
 #define HAL_STATE_LED1()          (LED1_POLARITY (LED1_SBIT))
-#define HAL_STATE_LED2()          0
+#define HAL_STATE_LED2()          (LED2_POLARITY (LED2_SBIT))
 #define HAL_STATE_LED3()          0
-#define HAL_STATE_LED4()          (LED4_POLARITY (LED4_SBIT))
+#define HAL_STATE_LED4()          0
 
 /* ----------- XNV ---------- */
 #define XNV_SPI_BEGIN()             st(P1_3 = 0;)
@@ -217,9 +217,8 @@ extern void MAC_RfFrontendSetup(void);
 st( \
   /* Mode select UART1 SPI Mode as master. */\
   U1CSR = 0; \
-  \
   /* Setup for 115200 baud. */\
-  U1GCR = 11; \
+  U1GCR |= 11;  \
   U1BAUD = 216; \
   \
   /* Set bit order to MSB */\
@@ -229,7 +228,7 @@ st( \
   PERCFG |= 0x02;  /* U1CFG */\
   \
   /* Select peripheral function on I/O pins but SS is left as GPIO for separate control. */\
-  P1SEL |= 0xE0;  /* SELP1_[7:4] */\
+  P1SEL |= 0xE0; /*  SELP1_[7:4] */\
   /* P1.1,2,3: reset, LCD CS, XNV CS. */\
   P1SEL &= ~0x0E; \
   P1 |= 0x0E; \
