@@ -13,6 +13,7 @@ void vprint(const char *fmt, va_list argp) {
     }
 }
 
+
 #ifdef DO_DEBUG_UART
 #define UART_PORT HAL_UART_PORT_0
 bool DebugInit() {
@@ -68,10 +69,10 @@ bool DebugInit() {return true;};
 void LREP(char *format, ...) {
     va_list argp;
     va_start(argp, format);
-    printf(format, argp);
+//    printf(format, argp);
     va_end(argp);
 };
 void LREPMaster(uint8 *data) {
-    printf((const char*)data);
+//    printf((const char*)data);
 };
 #endif
