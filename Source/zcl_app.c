@@ -78,9 +78,6 @@ static uint8 currentSensorsReadingPhase = 0;
 
 afAddrType_t inderect_DstAddr = {.addrMode = (afAddrMode_t)AddrNotPresent, .endPoint = 0, .addr.shortAddr = 0};
 
-#if defined (OTA_CLIENT) && (OTA_CLIENT == TRUE)
-#define DEVICE_POLL_RATE                 8000   // Poll rate for end device
-#endif
 
 /*********************************************************************
  * LOCAL FUNCTIONS
@@ -378,7 +375,7 @@ static void zclApp_ProcessOTAMsgs( zclOTA_CallbackMsg_t* pMsg )
       RxOnIdle = TRUE;
       ZMacSetReq( ZMacRxOnIdle, &RxOnIdle );
 //      NLME_SetPollRate( 2000 );
-      NLME_SetPollRate( 300 );
+      NLME_SetPollRate(DEVICE_POLL_RATE_DL);
     }
     break;
 

@@ -5,6 +5,8 @@
 #include "bdb_interface.h"
 #include "hal_key.h"
 #include "hal_led.h"
+#include "zcl_ota.h"
+#include "zcl_app.h"
 
 static void zclCommissioning_ProcessCommissioningStatus(bdbCommissioningModeMsg_t *bdbCommissioningModeMsg);
 static void zclCommissioning_ResetBackoffRetry(void);
@@ -160,13 +162,19 @@ uint16 zclCommissioning_event_loop(uint8 task_id, uint16 events) {
 #if ZG_BUILD_ENDDEVICE_TYPE
         bdb_ZedAttemptRecoverNwk();
         // for sleeping after changing parent
-        osal_start_timerEx(zclCommissioning_TaskId, APP_COMMISSIONING_CLOCK_DOWN_POLING_RATE_EVT, 10 * 1000);
-#endif
+        osal_start_timerEx(zclCommissioning_TaskId, APP_COMMISSIONING_CLOCK_DOWN_POLING_RATE_EVT, 10 * 1000);        
+#endif                
         return (events ^ APP_COMMISSIONING_END_DEVICE_REJOIN_EVT);
     }
 
     if (events & APP_COMMISSIONING_CLOCK_DOWN_POLING_RATE_EVT) {
         LREPMaster("APP_CLOCK_DOWN_POLING_RATE_EVT\r\n");
+#if defined (OTA_CLIENT) && (OTA_CLIENT == TRUE)        
+        if ( zclOTA_ImageUpgradeStatus == OTA_STATUS_IN_PROGRESS )
+        {
+           NLME_SetPollRate(DEVICE_POLL_RATE_DL);
+        }
+#endif
         zclCommissioning_Sleep(true);
         return (events ^ APP_COMMISSIONING_CLOCK_DOWN_POLING_RATE_EVT);
     }

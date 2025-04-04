@@ -15,6 +15,10 @@ extern "C" {
 /*********************************************************************
  * CONSTANTS
  */
+#if defined (OTA_CLIENT) && (OTA_CLIENT == TRUE)
+#define DEVICE_POLL_RATE                 8000   // Poll rate for end device
+#define DEVICE_POLL_RATE_DL               300
+#endif
 
 // Application Events
 #define APP_REPORT_EVT                  0x0001
